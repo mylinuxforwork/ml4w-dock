@@ -3,6 +3,8 @@
 A dock for Hyprland built with [Quickshell](https://quickshell.org). Part of 
 [ML4W OS](https://github.com/mylinuxforwork/dotfiles), but it also runs on its own.
 
+![ML4W Dock](screenshots/dock.png)
+
 ## Installation
 
 ```bash
