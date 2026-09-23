@@ -24,7 +24,9 @@ To start the dock with Hyprland, add this line to your Hyprland config (the ML4W
 Dotfiles start it from `ml4w-autostart`):
 
 ```
-exec-once = qs -p ~/.local/share/ml4w-dock
+hl.on("hyprland.start", function ()
+  hl.exec_cmd("qs -p ~/.local/share/ml4w-dock")
+end)
 ```
 
 ## IPC
