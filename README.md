@@ -1,7 +1,7 @@
 # ML4W Dock
 
-A dock for Hyprland built with [Quickshell](https://quickshell.org). Part of the
-[ML4W Dotfiles](https://github.com/mylinuxforwork/dotfiles), but it also runs on its own.
+A dock for Hyprland built with [Quickshell](https://quickshell.org). Part of 
+[ML4W OS](https://github.com/mylinuxforwork/dotfiles), but it also runs on its own.
 
 ## Installation
 
