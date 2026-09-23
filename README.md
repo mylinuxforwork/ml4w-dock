@@ -61,6 +61,23 @@ its default value.
 
 Both commands are run through bash, so `~`, arguments and pipes work.
 
+## Wallpaper colors with matugen
+
+To make the dock follow your wallpaper, have [matugen](https://github.com/InioX/matugen)
+write its colors to `theme.colorsFile`. Add a template to
+`~/.config/matugen/config.toml`:
+
+```toml
+[templates.ml4w_dock]
+input_path  = "./templates/colors.json"
+output_path = "~/.config/ml4w-dock/colors.json"
+```
+
+`templates/colors.json` maps each Material color role to its matugen value, e.g.
+`"primary": "{{colors.primary.default.hex}}"`. The dock watches the file, so no
+`post_hook` is needed. ML4W OS ships a complete
+[config and template](https://github.com/mylinuxforwork/dotfiles/tree/main/dotfiles/.config/matugen).
+
 ## Uninstall
 
 ```bash
