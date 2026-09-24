@@ -12,30 +12,44 @@ curl -sSL https://raw.githubusercontent.com/mylinuxforwork/ml4w-dock/main/instal
 ```
 
 The script clones ml4w-dock into `$HOME/.local/share/ml4w-dock`, or pulls the
-latest version if the folder already exists. Run it again to update.
+latest version if the folder already exists, and links the `ml4w-dock` command
+into `$HOME/.local/bin`. Run it again to update.
 
 Requires `git` and `quickshell`.
+
+`$HOME/.local/bin` must be in your `$PATH` to run `ml4w-dock`. Most
+distributions add it by default. If yours does not, add this line to your shell
+configuration (e.g. `~/.bashrc` or `~/.zshrc`):
+
+```bash
+export PATH="$HOME/.local/bin:$PATH"
+```
 
 ## Start
 
 ```bash
-qs -p ~/.local/share/ml4w-dock
+ml4w-dock
 ```
+
+This runs `qs -p ~/.local/share/ml4w-dock`. If the dock is already running,
+nothing happens. `ml4w-dock stop` stops it and `ml4w-dock restart` restarts it.
 
 To start the dock with Hyprland, add this line to your Hyprland config (the ML4W
 Dotfiles start it from `ml4w-autostart`):
 
 ```
 hl.on("hyprland.start", function ()
-  hl.exec_cmd("qs -p ~/.local/share/ml4w-dock")
+  hl.exec_cmd("~/.local/bin/ml4w-dock")
 end)
 ```
 
 ## IPC
 
 ```bash
-qs -p ~/.local/share/ml4w-dock ipc call dock <function>
+ml4w-dock <function>
 ```
+
+This is a shortcut for `qs -p ~/.local/share/ml4w-dock ipc call dock <function>`.
 
 | Function | Description |
 |---|---|
@@ -44,6 +58,8 @@ qs -p ~/.local/share/ml4w-dock ipc call dock <function>
 | `reload` | Re-read `config.json` and apply it |
 | `settings` | Open the settings dialog |
 | `edit` | Open `config.json` in the configured editor |
+
+Run `ml4w-dock help` to list all commands.
 
 ## Configuration
 
@@ -84,5 +100,6 @@ output_path = "~/.config/ml4w-dock/colors.json"
 curl -sSL https://raw.githubusercontent.com/mylinuxforwork/ml4w-dock/main/uninstall.sh | bash
 ```
 
-Stops the dock and removes `$HOME/.local/share/ml4w-dock`. Your configuration in
+Stops the dock and removes `$HOME/.local/share/ml4w-dock` and the
+`ml4w-dock` command in `$HOME/.local/bin`. Your configuration in
 `~/.config/ml4w-dock` is kept.

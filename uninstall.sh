@@ -7,10 +7,16 @@ set -euo pipefail
 
 INSTALL_DIR="$HOME/.local/share/ml4w-dock"
 CONFIG_DIR="$HOME/.config/ml4w-dock"
+BIN_LINK="$HOME/.local/bin/ml4w-dock"
 
-if pgrep -f "qs -p $INSTALL_DIR" >/dev/null 2>&1; then
+if pgrep -f "qs.* -p $INSTALL_DIR" >/dev/null 2>&1; then
     echo ":: Stopping the running dock"
-    pkill -f "qs -p $INSTALL_DIR" || true
+    pkill -f "qs.* -p $INSTALL_DIR" || true
+fi
+
+if [ -L "$BIN_LINK" ]; then
+    echo ":: Removing $BIN_LINK"
+    rm -f "$BIN_LINK"
 fi
 
 if [ -d "$INSTALL_DIR" ]; then

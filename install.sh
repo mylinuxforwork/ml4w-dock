@@ -7,6 +7,7 @@ set -euo pipefail
 
 REPO_URL="https://github.com/mylinuxforwork/ml4w-dock"
 INSTALL_DIR="$HOME/.local/share/ml4w-dock"
+BIN_DIR="$HOME/.local/bin"
 
 if ! command -v git >/dev/null 2>&1; then
     echo ":: ERROR: git is required but not installed."
@@ -32,4 +33,17 @@ else
     echo ":: ml4w-dock installed successfully."
 fi
 
-echo ":: Start the dock with: qs -p $INSTALL_DIR"
+echo ":: Linking ml4w-dock into $BIN_DIR"
+mkdir -p "$BIN_DIR"
+ln -sf "$INSTALL_DIR/bin/ml4w-dock" "$BIN_DIR/ml4w-dock"
+
+case ":$PATH:" in
+    *":$BIN_DIR:"*) ;;
+    *)
+        echo ":: WARNING: $BIN_DIR is not in your \$PATH."
+        echo ":: Add it to your shell configuration, e.g. in ~/.bashrc or ~/.zshrc:"
+        echo ":: export PATH=\"\$HOME/.local/bin:\$PATH\""
+        ;;
+esac
+
+echo ":: Start the dock with: ml4w-dock"
