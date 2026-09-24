@@ -32,14 +32,14 @@ Singleton {
     // Only the roles the dock draws with are listed; other keys in the file are
     // ignored.
     readonly property var defaultColors: ({
-        "background": "#1a1110",
-        "on_primary": "#561f13",
-        "on_surface": "#f1dfdb",
-        "on_surface_variant": "#d8c2bd",
-        "outline_variant": "#534340",
-        "primary": "#ffb4a5",
+        "background": "#0e1514",
+        "on_primary": "#003734",
+        "on_surface": "#dde4e2",
+        "on_surface_variant": "#bec9c6",
+        "outline_variant": "#3f4947",
+        "primary": "#81d5cd",
         "shadow": "#000000",
-        "surface_container_high": "#322826"
+        "surface_container_high": "#252b2a"
     })
 
     property color background: defaultColors.background
