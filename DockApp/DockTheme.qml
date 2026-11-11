@@ -88,6 +88,103 @@ Singleton {
     // file that is created later). Part of "Reload Dock" / the reload IPC.
     function reload(): void {
         colorsView.reload()
+        if (root.opacityFile !== "")
+            opacityView.reload()
+        if (root.transparentBorderFile !== "")
+            transparentBorderView.reload()
+        if (root.blurFile !== "")
+            blurView.reload()
+    }
+
+    // --- SHARED BACKGROUND OPACITY ---
+    // theme.opacityFile holds a background opacity in percent (0-100), shared
+    // with the rest of the shell — on ML4W the sidebar's Opacity slider writes
+    // ~/.config/ml4w/settings/quickshell-opacity. -1 while the file is not set,
+    // missing or invalid: the dock then uses opacity.normal. The file is
+    // watched; one created after the dock started is picked up by reload().
+    property int globalOpacity: -1
+
+    readonly property string opacityFile: {
+        if (!DockSettings.ready)
+            return ""
+        const raw = `${DockSettings.settings.theme.opacityFile ?? ""}`.trim()
+        return raw.replace(/^(~|\$HOME)(?=\/|$)/, Quickshell.env("HOME"))
+    }
+
+    onOpacityFileChanged: if (root.opacityFile === "") root.globalOpacity = -1
+
+    FileView {
+        id: opacityView
+        path: root.opacityFile
+        watchChanges: true
+        printErrors: false
+        onFileChanged: opacityView.reload()
+        onLoaded: {
+            const v = parseInt(opacityView.text().trim())
+            root.globalOpacity = isNaN(v) ? -1 : Math.max(0, Math.min(100, v))
+        }
+        onLoadFailed: root.globalOpacity = -1
+    }
+
+    // --- TRANSPARENT BORDER ---
+    // theme.transparentBorderFile holds "on" or "off", shared with the rest of
+    // the shell — on ML4W the sidebar's Transparent Border switch writes
+    // ~/.config/ml4w/settings/quickshell-transparent-border. On (also when the
+    // setting is empty or the file is missing): the border follows the
+    // background opacity. Off: it stays at fixedBorderOpacity.
+    property bool transparentBorder: true
+    readonly property real fixedBorderOpacity: 0.8
+
+    // Opacity (0-1) for the border, given the background opacity.
+    function borderOpacity(fillOpacity) {
+        return root.transparentBorder ? fillOpacity : root.fixedBorderOpacity
+    }
+
+    readonly property string transparentBorderFile: {
+        if (!DockSettings.ready)
+            return ""
+        const raw = `${DockSettings.settings.theme.transparentBorderFile ?? ""}`.trim()
+        return raw.replace(/^(~|\$HOME)(?=\/|$)/, Quickshell.env("HOME"))
+    }
+
+    onTransparentBorderFileChanged: if (root.transparentBorderFile === "") root.transparentBorder = true
+
+    FileView {
+        id: transparentBorderView
+        path: root.transparentBorderFile
+        watchChanges: true
+        printErrors: false
+        onFileChanged: transparentBorderView.reload()
+        onLoaded: root.transparentBorder = transparentBorderView.text().trim() !== "off"
+        onLoadFailed: root.transparentBorder = true
+    }
+
+    // --- BLUR ---
+    // theme.blurFile holds "on" or "off" — on ML4W the sidebar's Blur switch
+    // writes ~/.config/ml4w/settings/quickshell-blur, and a Hyprland layer
+    // rule blurs behind the surface while it is on. That rule uses
+    // ignore_alpha, so it also blurs the denser part of the drop shadow and
+    // ends in a hard edge around the background; the shadow is hidden while
+    // blurEnabled is set. Missing file or "" = off.
+    property bool blurEnabled: false
+
+    readonly property string blurFile: {
+        if (!DockSettings.ready)
+            return ""
+        const raw = `${DockSettings.settings.theme.blurFile ?? ""}`.trim()
+        return raw.replace(/^(~|\$HOME)(?=\/|$)/, Quickshell.env("HOME"))
+    }
+
+    onBlurFileChanged: if (root.blurFile === "") root.blurEnabled = false
+
+    FileView {
+        id: blurView
+        path: root.blurFile
+        watchChanges: true
+        printErrors: false
+        onFileChanged: blurView.reload()
+        onLoaded: root.blurEnabled = blurView.text().trim() === "on"
+        onLoadFailed: root.blurEnabled = false
     }
 
     // Guards the one-time seeding below.

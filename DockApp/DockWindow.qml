@@ -341,44 +341,36 @@ PanelWindow {
         }
 
         RectangularShadow {
+            // Hidden while blur is on: the blur would end in a hard edge
+            // around the background (see DockTheme.blurEnabled).
+            visible: !DockTheme.blurEnabled
             anchors.fill: pillBg
             radius: pillBg.radius
             blur: 15
             color: Qt.rgba(DockTheme.shadow.r, DockTheme.shadow.g, DockTheme.shadow.b, 0.4)
         }
 
-        // Gradient BORDER layer (outer)
-        Rectangle {
+        // Background: fill + gradient border, each with its own opacity
+        // (DockBackground). The shared opacity (theme.opacityFile) wins over
+        // opacity.normal when it is set; the border follows it or stays at 80%
+        // (theme.transparentBorderFile).
+        DockBackground {
             id: pillBg
             anchors.fill: parent
             radius: root.settings.pill.radius
-            opacity: root.settings.opacity.normal
+            borderWidth: root.settings.border.width
+            fillOpacity: DockTheme.globalOpacity >= 0
+                ? DockTheme.globalOpacity / 100
+                : root.settings.opacity.normal
 
-            // Border colors come from the settings file; empty strings fall back
-            // to the dynamic wallpaper theme.
-            gradient: Gradient {
-                orientation: Gradient.Vertical
-                GradientStop {
-                    position: 0.0
-                    color: root.settings.border.colorTop !== ""
-                        ? root.settings.border.colorTop
-                        : DockTheme.primary
-                }
-                GradientStop {
-                    position: 1.0
-                    color: root.settings.border.colorBottom !== ""
-                        ? root.settings.border.colorBottom
-                        : DockTheme.on_primary
-                }
-            }
-
-            // Actual background fill (inner), inset by the border thickness
-            Rectangle {
-                anchors.fill: parent
-                anchors.margins: root.settings.border.width
-                radius: parent.radius - anchors.margins
-                color: DockTheme.background
-            }
+            // Border colors come from the settings file; empty strings fall
+            // back to the dynamic wallpaper theme.
+            colorTop: root.settings.border.colorTop !== ""
+                ? root.settings.border.colorTop
+                : DockTheme.primary
+            colorBottom: root.settings.border.colorBottom !== ""
+                ? root.settings.border.colorBottom
+                : DockTheme.on_primary
         }
 
         RowLayout {

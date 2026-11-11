@@ -21,6 +21,20 @@ used instead.
 theme.colorsFile is the JSON file of Material color roles the dock takes its
 colors from (matugen's templates/colors.json format). It is watched, so the
 dock recolors whenever the file changes.
+
+theme.opacityFile holds a shared background opacity as a percentage (0-100),
+written by the Opacity slider in the ML4W sidebar. While the file exists and
+holds a number, it overrides opacity.normal; when it is missing or invalid,
+opacity.normal is used. Set it to "" to always use opacity.normal.
+
+theme.transparentBorderFile holds "on" or "off", written by the Transparent
+Border switch in the ML4W sidebar. On (also when the file is missing or the
+setting is ""): the border fades with the background. Off: the border stays at
+80% opacity.
+
+theme.blurFile holds "on" or "off", written by the Blur switch in the ML4W
+sidebar (which also turns on a Hyprland blur rule). While it is "on", the drop
+shadow is hidden, because the blur would end in a hard edge around it.
 */
 {
     "dock": {
@@ -49,7 +63,10 @@ dock recolors whenever the file changes.
         "normal": 0.7
     },
     "theme": {
-        "colorsFile": "~/.config/ml4w-dock/colors.json"
+        "colorsFile": "~/.config/ml4w-dock/colors.json",
+        "opacityFile": "~/.config/ml4w/settings/quickshell-opacity",
+        "transparentBorderFile": "~/.config/ml4w/settings/quickshell-transparent-border",
+        "blurFile": "~/.config/ml4w/settings/quickshell-blur"
     },
     "apps": {
         "pinned": [

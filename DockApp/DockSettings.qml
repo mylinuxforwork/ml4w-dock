@@ -36,7 +36,10 @@ Singleton {
         "pill":   { "radius": 16, "padding": 12, "animationDuration": 350 },
         "border": { "width": 2, "colorTop": "", "colorBottom": "" },
         "opacity":{ "normal": 0.7 },
-        "theme":  { "colorsFile": "~/.config/ml4w-dock/colors.json" },
+        "theme":  { "colorsFile": "~/.config/ml4w-dock/colors.json",
+                    "opacityFile": "~/.config/ml4w/settings/quickshell-opacity",
+                    "transparentBorderFile": "~/.config/ml4w/settings/quickshell-transparent-border",
+                    "blurFile": "~/.config/ml4w/settings/quickshell-blur" },
         "apps":   { "pinned": ["firefox", "kitty"] }
     })
 
