@@ -26,6 +26,11 @@ Scope {
         function autohideToggle(): void {
             DockSettings.setAutohide(!DockSettings.autohide)
         }
+        function triggerOnDockOn(): void { DockSettings.setTriggerOnDock(true) }
+        function triggerOnDockOff(): void { DockSettings.setTriggerOnDock(false) }
+        function triggerOnDockToggle(): void {
+            DockSettings.setTriggerOnDock(!DockSettings.triggerOnDock)
+        }
         // Re-read config.json from disk and apply the changes.
         function reload(): void {
             DockSettings.reloadSettings()

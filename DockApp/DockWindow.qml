@@ -258,6 +258,11 @@ PanelWindow {
     // the very bottom of the screen, and possibly nowhere near the pill
     // horizontally — would land outside the input region and hide the dock right
     // back again.
+    //
+    // By default that strip spans the full width. With dock.triggerOnDock it is
+    // limited to the pill's width plus 20px either side, so only a pointer at
+    // the dock's own position reveals it. The pointer that triggered the reveal
+    // is always inside that range, so the dock does not hide right back again.
     readonly property int hotZoneHeight: root.revealed
         ? settings.dock.marginBottom + 3
         : 3
@@ -278,9 +283,11 @@ PanelWindow {
             height: root.menuOpen ? 0 : Math.round(pill.height)
         }
         Region {
-            x: 0
+            x: settings.dock.triggerOnDock ? Math.round(pill.x) - 20 : 0
             y: root.height - root.hotZoneHeight
-            width: (root.autohide && !root.menuOpen) ? root.width : 0
+            width: (root.autohide && !root.menuOpen)
+                ? (settings.dock.triggerOnDock ? Math.round(pill.width) + 40 : root.width)
+                : 0
             height: (root.autohide && !root.menuOpen) ? root.hotZoneHeight : 0
         }
     }

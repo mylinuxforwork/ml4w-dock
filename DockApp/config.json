@@ -10,6 +10,9 @@ It is created empty on first start and merged over the
 built-in defaults below, so it only needs to carry the values you want to
 change. The dock writes enabled / autohide / the pinned app list back into it.
 
+dock.triggerOnDock limits the autohide reveal to the dock's own position
+instead of the whole bottom edge. It only has an effect while autohide is on.
+
 dock.launcherCommand is what a left click on the launcher button runs. It is
 run through bash, so a leading ~, arguments and pipes all work.
 
@@ -40,6 +43,7 @@ shadow is hidden, because the blur would end in a hard edge around it.
     "dock": {
         "enabled": true,
         "autohide": false,
+        "triggerOnDock": false,
         "iconSize": 32,
         "spacing": 8,
         "marginBottom": 16,

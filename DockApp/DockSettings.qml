@@ -31,6 +31,7 @@ Singleton {
         "dock":   { "enabled": true, "autohide": false, "iconSize": 32,
                     "spacing": 8, "marginBottom": 16, "reserveSpace": true,
                     "hideDelay": 400, "launcherButton": true,
+                    "triggerOnDock": false,
                     "launcherCommand": "~/.config/hypr/scripts/launcher.sh",
                     "editorCommand": "~/.config/ml4w/settings/editor.sh" },
         "pill":   { "radius": 16, "padding": 12, "animationDuration": 350 },
@@ -47,6 +48,7 @@ Singleton {
 
     readonly property bool enabled: settings.dock.enabled
     readonly property bool autohide: settings.dock.autohide
+    readonly property bool triggerOnDock: settings.dock.triggerOnDock
     readonly property bool launcherButton: settings.dock.launcherButton
 
     // Whether the settings dialog is open. DockLoader creates the dialog while
@@ -234,6 +236,10 @@ Singleton {
 
     function setAutohide(on: bool): void {
         applySettings(persistDockFlag("autohide", on))
+    }
+
+    function setTriggerOnDock(on: bool): void {
+        applySettings(persistDockFlag("triggerOnDock", on))
     }
 
     function setLauncherButton(on: bool): void {

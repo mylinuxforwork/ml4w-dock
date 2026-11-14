@@ -129,6 +129,41 @@ FloatingWindow {
                 }
             }
 
+            // --- TRIGGER ON DOCK ---
+            // Only meaningful while autohide is enabled, so it is dimmed and inert otherwise.
+            RowLayout {
+                Layout.fillWidth: true
+                spacing: 16
+                opacity: DockSettings.autohide ? 1.0 : 0.4
+
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    spacing: 2
+
+                    Text {
+                        text: "Trigger on Dock"
+                        color: DockTheme.primary
+                        font.family: DockTheme.fontFamily
+                        font.pixelSize: 16
+                    }
+                    Text {
+                        Layout.fillWidth: true
+                        text: "Reveal the hidden dock only when the pointer is over the dock, not along the whole bottom edge. Requires Autohide."
+                        color: DockTheme.on_surface_variant
+                        font.family: DockTheme.fontFamily
+                        font.pixelSize: 13
+                        wrapMode: Text.WordWrap
+                    }
+                }
+
+                DockSwitch {
+                    Layout.alignment: Qt.AlignVCenter
+                    enabled: DockSettings.autohide
+                    value: DockSettings.triggerOnDock
+                    onToggledTo: on => DockSettings.setTriggerOnDock(on)
+                }
+            }
+
             // --- LAUNCHER ICON ---
             RowLayout {
                 Layout.fillWidth: true

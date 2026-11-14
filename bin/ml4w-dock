@@ -12,6 +12,7 @@ DOCK_DIR="$(dirname "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")")"
 IPC_FUNCTIONS=(
     toggle enable disable
     autohideToggle autohideOn autohideOff
+    triggerOnDockToggle triggerOnDockOn triggerOnDockOff
     reload settings edit
 )
 
@@ -20,19 +21,22 @@ usage() {
 Usage: ml4w-dock [command]
 
 Commands:
-  start             Start the dock (default, does nothing if it is already running)
-  stop              Stop the dock
-  restart           Stop and start the dock
-  toggle            Show or hide the dock
-  enable            Show the dock
-  disable           Hide the dock
-  autohideToggle    Toggle autohide
-  autohideOn        Turn autohide on
-  autohideOff       Turn autohide off
-  reload            Re-read config.json and apply it
-  settings          Open the settings dialog
-  edit              Open config.json in the configured editor
-  help              Show this help
+  start                 Start the dock (default, does nothing if it is already running)
+  stop                  Stop the dock
+  restart               Stop and start the dock
+  toggle                Show or hide the dock
+  enable                Show the dock
+  disable               Hide the dock
+  autohideToggle        Toggle autohide
+  autohideOn            Turn autohide on
+  autohideOff           Turn autohide off
+  triggerOnDockToggle   Toggle Trigger on Dock (needs autohide)
+  triggerOnDockOn       Turn Trigger on Dock on
+  triggerOnDockOff      Turn Trigger on Dock off
+  reload                Re-read config.json and apply it
+  settings              Open the settings dialog
+  edit                  Open config.json in the configured editor
+  help                  Show this help
 USAGE
 }
 

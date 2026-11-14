@@ -55,6 +55,7 @@ This is a shortcut for `qs -p ~/.local/share/ml4w-dock ipc call dock <function>`
 |---|---|
 | `toggle` / `enable` / `disable` | Show or hide the dock |
 | `autohideToggle` / `autohideOn` / `autohideOff` | Toggle autohide |
+| `triggerOnDockToggle` / `triggerOnDockOn` / `triggerOnDockOff` | Toggle "Trigger on Dock" (needs autohide) |
 | `reload` | Re-read `config.json` and apply it |
 | `settings` | Open the settings dialog |
 | `edit` | Open `config.json` in the configured editor |
